@@ -12,6 +12,8 @@ type EnvConfig struct {
 	HTTPPort                                 string `env:"HTTP_PORT" envDefault:"8000"`
 	HTTPRequestHeaderMaxSize                 int    `env:"HTTP_REQUEST_HEADER_MAX_SIZE" envDefault:"10000"`
 	HTTPRequestReadHeaderTimeoutMilliseconds int    `env:"HTTP_REQUEST_READ_HEADER_TIMEOUT_MILLISECONDS" envDefault:"2000"`
+
+	PrometheusPort string `env:"PROMETHEUS_PORT" envDefault:"9000"`
 }
 
 func GetConfigFromEnv() *EnvConfig {
