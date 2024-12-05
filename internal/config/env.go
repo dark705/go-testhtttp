@@ -8,7 +8,6 @@ import (
 type EnvConfig struct {
 	Version  string `env:"VERSION" envDefault:"version_not_set"`
 	LogLevel string `env:"LOG_LEVEL" envDefault:"info"`
-	Hostname string `env:"HOSTNAME" envDefault:"localhost"`
 
 	HTTPPort                                 string `env:"HTTP_PORT" envDefault:"8000"`
 	HTTPRequestHeaderMaxSize                 int    `env:"HTTP_REQUEST_HEADER_MAX_SIZE" envDefault:"10000"`

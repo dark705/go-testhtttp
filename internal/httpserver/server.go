@@ -3,10 +3,11 @@ package httpserver
 import (
 	"context"
 	"errors"
-	"github.com/dark705/go-testhtttp/internal/helpers"
 	"net"
 	"net/http"
 	"time"
+
+	"github.com/dark705/go-testhtttp/internal/helpers"
 )
 
 type Logger interface {
@@ -25,6 +26,10 @@ type Logger interface {
 	Fatalf(format string, args ...any)
 	FatalfContext(ctx context.Context, format string, args ...any)
 }
+
+const (
+	shutdownMaxTimeout = 5 * time.Second
+)
 
 type Server struct {
 	httpServer *http.Server
@@ -65,7 +70,7 @@ func (s *Server) Run() {
 
 func (s *Server) Stop() {
 	s.logger.Infof(s.config.Name + " HTTPServer, stop...")
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	ctx, cancel := context.WithTimeout(context.Background(), shutdownMaxTimeout)
 	err := s.httpServer.Shutdown(ctx)
 	if err != nil {
 		s.logger.Errorf(s.config.Name + " HTTPServer, fail stop")
