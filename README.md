@@ -1,5 +1,13 @@
 # Simple HTTP Server with metrics, health check and so on
 
+## Github
+
+Can be found on: https://github.com/dark705/go-testhtttp
+
+## Docker
+
+Can be found on: https://hub.docker.com/r/dark705/go-testhttp 
+
 ## API endpoints
 
 ## Test endpoints
