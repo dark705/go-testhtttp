@@ -9,6 +9,7 @@ import (
 	"github.com/dark705/go-testhtttp/internal/config"
 	"github.com/dark705/go-testhtttp/internal/httpserver"
 	"github.com/dark705/go-testhtttp/internal/httptesthandler"
+	"github.com/dark705/go-testhtttp/internal/kuberprobe"
 	"github.com/dark705/go-testhtttp/internal/prometheus"
 	"github.com/dark705/go-testhtttp/internal/slog"
 	promhttpmetrics "github.com/slok/go-http-metrics/metrics/prometheus"
@@ -28,10 +29,15 @@ func main() {
 
 	httpTestHandler := httphandler.NewHTTPTestHandler(logger)
 	httpHostHandler := httphandler.NewHTTPHostHandler(logger)
+	httpKuberProbeHandler := kuberprobe.NewHTTPHandler(logger,
+		envConfig.KuberProbeStartupSeconds,
+		envConfig.KuberProbeProbabilityLive,
+		envConfig.KuberProbeProbabilityReady)
 
 	httpHandler := http.NewServeMux()
 	httpHandler.Handle(httphandler.HTTPTestRoutePattern, httpTestHandler)
 	httpHandler.Handle(httphandler.HTTPHostRoutePattern, httpHostHandler)
+	httpHandler.Handle(kuberprobe.HTTPRoutePattern, httpKuberProbeHandler)
 
 	prometheusMiddlewareHandler := promhttpmiddleware.New(promhttpmiddleware.Config{
 		Recorder: prometheus.NewFilterRecorder(

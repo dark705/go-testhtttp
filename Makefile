@@ -9,4 +9,4 @@ lint:
      && golangci-lint run -v'
 
 build_docker:
-	buildx build . --tag dark705/go-testhttp:1.0 --tag dark705/go-testhttp:latest
+	buildx build . --tag dark705/go-testhttp:1.1 --tag dark705/go-testhttp:latest
